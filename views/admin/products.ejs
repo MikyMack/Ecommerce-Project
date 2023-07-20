@@ -1,0 +1,111 @@
+<% if(admin.staff_No === 1) { %>
+    <%- include('../partials/staff1Header.ejs') %>
+<% } else if(admin.staff_No === 2) { %>
+    <%- include('../partials/staff2Header.ejs') %>
+<% } else if(admin.staff_No === 3) { %>
+    <%- include('../partials/staff3Header.ejs') %>
+<% } else { %>
+    <%- include ('../partials/adminHeader.ejs') %>
+<% } %>
+
+
+
+<style>
+    body{
+        overflow-y: hidden;
+    }
+    table,
+    th,
+    thead{
+        border-top : 1px solid rgba(7, 7, 7, 0.701);
+    }
+    td {
+        /* border-top : 1px solid rgba(7, 7, 7, 0.701); */
+        border: none;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+</style>
+
+        <h4 class="text-center my-5 text-secondary">ALL PRODUCTS</h4>
+        <a href="/admin/add-product"><button type="button"  class="btn btn-primary mx-3">+ Add Product</button></a>
+        <br><br>
+        <div style="height: 55vh; overflow-y: auto; scroll-behavior: smooth;">
+        <table class="table text-center">
+            <thead >
+                <tr>
+                    <th scope="col">SL NO</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">STOCK</th>
+                    <th scope="col">CATEGORY</th>
+                    <th scope="col">PRICE</th>
+                    <th scope="col">RATING</th>
+                    <th scope="col">IMAGE</th>
+                    <th scope="col">ACTION</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                <% if(products.length> 0){ %>
+                    <% for(let i=1;i <=products.length; i++){ %>
+                        <% if(products.length>=0){ %>
+                            <tr>
+                                <th>
+                                    <%= i %>
+                                </th>
+                                <td>
+                                    <%= products[i-1].name %>
+                                </td>
+                                <td>
+                                    <%= products[i-1].stock %>
+                                </td>
+                                <td>
+                                    <%= products[i-1].category %>
+                                </td>
+                                <td>
+                                    ₹<%= products[i-1].price %>
+                                </td>
+                                <td>
+                                    <% for(let j=1; j<=products[i-1].rating; j++) {%>
+                                        ★
+                                        <% } %>
+                                </td>
+
+                                <td>
+                                    <% if(products[i-1].image) { %>
+                                        <img src="/uploads/<%= products[i-1].image[0] %>" width="100vw" height="100vh">
+                                        <% }else{ %>
+                                            Image Not Found
+                                            <% } %>
+                                </td>
+                                <td>
+                                    <a class="text-success" href="/admin/edit-product?id=<%= products[i-1]._id %>"><i
+                                            style="color: green;" class="m-r-5 mdi mdi-border-color"></i>EDIT</a><br>
+
+                                            
+                                    <a id="<%-products[i-1]._id %>" style="text-decoration: none; color: #310fca;"
+                                        href="/admin/show-product?id=<%-products[i-1]._id %>">
+                                        <% if(products[i-1].isAvailable){ %>UNLIST<%}else{%>list<%}%>
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                            <% } %>
+                                <% } } else{ %>
+                                    <tr>
+                                        <td colspan="5">Products Not Found</td>
+                                    </tr>
+                                    <% } %>
+
+            </tbody>
+        </table>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"></script>
+
+        <%- include ('../partials/adminFooter.ejs') %>

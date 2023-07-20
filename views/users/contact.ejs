@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Your head content goes here -->
+</head>
+<body>
+  <% if (id) { %>
+    <%- include('../partials/userLoginHeader') %>
+  <% } else { %>
+    <%- include('../partials/userHeader') %>
+  <% } %>
+
+  <!-- Inner page section -->
+  <section class="inner_page_head">
+    <div class="container_fuild">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="full">
+            <h3>Contact us</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End inner page section -->
+
+  <!-- Why section -->
+  <section class="why_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+          <div class="full">
+            <form action="index.html">
+              <fieldset>
+                <input type="text" placeholder="Enter your full name" name="name" required />
+                <input type="email" placeholder="Enter your email address" name="email" required />
+                <input type="text" placeholder="Enter subject" name="subject" required />
+                <textarea placeholder="Enter your message" required></textarea>
+                <input type="submit" value="Submit" />
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End why section -->
+
+  <!-- Footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 footer-col">
+          <!-- Footer contact -->
+          <!-- Your footer contact content goes here -->
+        </div>
+        <div class="col-md-4 footer-col">
+          <!-- Footer details -->
+          <!-- Your footer details content goes here -->
+        </div>
+        <div class="col-md-4 footer-col">
+          <!-- Map container -->
+          <!-- Your map container content goes here -->
+        </div>
+      </div>
+      <div class="footer-info">
+        <div class="col-lg-7 mx-auto px-0">
+          <p>
+            &copy; <span id="displayYear"></span> All Rights Reserved By <a href="/">SNJMart</a><br>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End footer section -->
+
+  <!-- JS scripts -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/custom.js"></script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<%- include ('../partials/adminHeader.ejs') %>
+
+<style>
+    table,
+    th,
+    thead{
+        border-top : 1px solid rgba(7, 7, 7, 0.701);
+    }
+    td {
+        /* border-top : 1px solid rgba(7, 7, 7, 0.701); */
+        border: none;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+</style>
+
+
+
+<div class="container">
+    <br><br>
+    <h4 class="text-center text-secondary">STAFF DETAILS</h4><br>
+    
+    <!-- Add button to add new staffs -->
+    <div class="text-right">
+      <button class="btn btn-primary" data-toggle="modal" data-target="#addStaff">Add New Staff</button>
+    </div>
+    
+    <br>
+    <table class="table text-center">
+      <!-- Table content -->
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">NAME</th>
+          <th scope="col">EMAIL</th>
+          <th scope="col">ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(users.length> 0){ %>
+
+            <% for(let i=0;i<users.length;i++) { %>
+            <tr>
+              <td>
+                <%= users[i].name %>
+              </td>
+              <td>
+                <%= users[i].email %>
+              </td>
+              <td>
+
+                <% if(users[i].is_verified){%>
+                  <button class="btn  btn-outline-danger" data-toggle="modal" data-target="#block"
+                    onclick="block('<%- users[i]._id %>')">Block</button>
+                  <% } else{%>
+                    <button class="btn  btn-outline-danger" data-toggle="modal" data-target="#unBlock"
+                      onclick="block('<%- users[i]._id %>')">UnBlock</button>
+                    <%}%>
+                      <a id="<%- users[i]._id %>" style="text-decoration: none; color: #ffff; display: none;"
+                        href="/admin/block-staff?id=<%= users[i]._id %>">Block</a>
+              </td>
+            </tr>
+            <% } } else{ %>
+              <tr>
+                <td colspan="5">Staffs not found </td>
+              </tr>
+              <% } %>
+      </tbody>
+    </table>
+
+    <% if(typeof message !=='undefined' ) { %>
+        <p style="color: rgb(0, 128, 60)">
+            <%= message %>
+        </p>
+        <% } %>
+    <% if(typeof mesage !=='undefined' ) { %>
+        <p style="color: rgb(128, 0, 0)">
+            <%= mesage %>
+        </p>
+        <% } %>
+
+  </div>
+  
+  <!-- Add staff modal -->
+  <div class="modal fade" id="addStaff" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add New Staff</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form id="addStaffForm" action="/admin/addStaff" method="post">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            <div class="form-group">
+              <label for="staff_no">Staff Number</label>
+              <input type="number" class="form-control" id="staff_no" name="staff_no" placeholder="Enter staff number" required>
+            </div>
+            <!-- Add additional fields for staff details if needed -->
+            <p id="error" class="text-danger"></p>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="validateForm()">Add Staff</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Existing modals (block and unblock) -->
+  <div class="modal fade" id="block" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Modal content -->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Confirm Block</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure want to Block user ?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="save()">Block</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  
+  <div class="modal fade" id="unBlock" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Modal content -->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Confirm UnBlock</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure want to UnBlock ?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="save()">UnBlock</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"></script>
+
+
+      <script>
+        function validateForm() {
+          // Get form inputs
+          var nameInput = document.getElementById('name');
+          var emailInput = document.getElementById('email');
+          var passwordInput = document.getElementById('password');
+          var staffNoInput = document.getElementById('staff_no');
+          let error = document.getElementById('error')
+
+          // Check if inputs are not empty
+          if (nameInput.value.trim() === '' || emailInput.value.trim() === '' || passwordInput.value.trim() === '' || staffNoInput.value.trim() === '') {
+            error.innerText='Please fill in all the fields';
+            return;
+          }
+          // Validate name length
+          if(nameInput.value.length< 5){
+            error.innerText='Name should be greater than 4 characters';
+            return;
+          }
+          // Validate email 
+         var emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+         if (!emailRegex.test(emailInput.value)) {
+            error.innerText='Please enter a valid email address';
+            return;
+         }
+         // Validate password length
+         if (passwordInput.value.length <= 5) {
+            error.innerText ='Password should be greater than 5 characters';
+            return;
+         }
+      
+          // Submit the form if all validations pass
+          document.getElementById('addStaffForm').submit();
+        }
+      </script>
+
+
+  <script>
+    var val;
+  
+    function block(value) {
+      val = value;
+      console.log(val);
+    }
+    function save() {
+      document.getElementById(val).click();
+      console.log(`true${val}`);
+    }
+  </script>
+  
+
+    <%- include ('../partials/adminFooter.ejs') %>

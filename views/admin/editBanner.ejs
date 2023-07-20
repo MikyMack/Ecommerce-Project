@@ -1,0 +1,138 @@
+<%- include ('../partials/adminHeader.ejs') %>
+
+
+        <h4 class="text-center text-success my-5">Edit Banner</h4>
+        <h3 style="color: red;text-align: center;">
+            <%=message%>
+        </h3>
+        <form action="/admin/edit-Banner" method="post" style="margin-left: 15%;width: 50%;"
+            enctype="multipart/form-data">
+            <fieldset>
+                <!-- Text input-->
+
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_name">Name</label>
+                    <br>
+                    <input id="product_name" name="bName" placeholder="Name" class="form-control input-md highlight"
+                        required="" type="text" value="<%=banner.name%>">
+
+                    <!-- Text input-->
+                    <label class="col-md-4 control-label" for="product_name">Description</label>
+                    <br>
+                    <input id="product_name" name="bDescription" placeholder="Enter Description"
+                        class="form-control input-md highlight" required="" type="text" value="<%=banner.description%>">
+
+                    <!-- File Button -->
+                    <label for="filebutton">Choose image</label>
+                    <br>
+                    <div class="d-flex mb-2 mt-2">
+                        <% for(let key of banner.image){ %>
+                          <div id='<%=key %>' style="padding-right: 4px; ">
+                            <div class="d-flex align-items-center justify-content-center position-relative "
+                              style="border: 1px solid rgb(236, 236, 236);border-radius: 8px;height: 85px;width: 78px;">
+                              <button style="color: aliceblue;" type="button" onclick="cut('<%=key%>')"
+                                class="close position-absolute z-3 top-0 end-0 bg-transparent shadow-none " aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                              <img src="/uploads/<%=key %>" class="img-thumbnail rounded" width="60px" height="60px"
+                                style="border: 4px;" alt="error">
+                            </div>
+                          </div>
+                          <%}%>
+                      </div>
+                      <input id="filebutton" name="bImage" class="input-file" type="file" id="image" multiple accept="image/*" />
+            
+
+                    
+                            <!-- <br>
+                            <br>
+                            <input id="filebutton" name="bImage" class="input-file" type="file" required multiple
+                                accept="image/*"> -->
+
+
+                            <!-- Button -->
+                            <div style="margin-left: 25%;" class="my-3">
+                                <input type="hidden" name="id" value="<%= banner._id%>">
+                                <button type="submit" id="singlebutton" name="singlebutton"
+                                    class="btn btn-success">+Add</button>
+                                <a href="/admin/banner"><button type="button" id="singlebutton" name="singlebutton"
+                                        class="btn btn-outline-light mx-3">Go back</button></a>
+                            </div>
+
+            </fieldset>
+        </form>
+
+
+
+
+        <style>
+            .highlight {
+                border-color: aliceblue;
+                margin-top: 2%;
+                margin-bottom: 2%;
+            }
+        </style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+    function cut(id) {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          pId = document.getElementById('id').value
+          document.getElementById(id).innerHTML = ''
+          const data = { img: id, pId: pId }
+          console.log(id, pId);
+          axios.post('/admin/updateImag', data)
+            .then(res => {
+              if (res.data) {
+                console.log(res.data);
+
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            })
+          console.log('This was logged in the callback: ' + result);
+          swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your file is not deleted :)',
+            'error'
+          )
+        }
+      })
+    }
+
+  </script>
+
+
+
+        <%- include ('../partials/adminFooter.ejs') %>

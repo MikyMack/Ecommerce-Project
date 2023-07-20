@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <!-- Basic -->
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <!-- Mobile Metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <!-- Site Metas -->
+      <meta name="keywords" content="" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <link rel="shortcut icon" href="" type="">
+      <title>SNJMart</title>
+      <!-- bootstrap core css -->
+      <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+      <!-- font awesome style -->
+      <link href="css/font-awesome.min.css" rel="stylesheet" />
+      <!-- Custom styles for this template -->
+      <link href="css/style.css" rel="stylesheet" />
+      <!-- responsive style -->
+      <link href="css/responsive.css" rel="stylesheet" />
+
+
+   </head>
+   <body class="sub_page">
+      <body style="overflow-x: hidden;" >
+         <div style="height: 35px; width: 100%; background-color: rgb(0, 0, 0); padding-top: 5px;" class="text-white text-center glowing-text">
+           <strong>S &amp; J Mart</strong> - The things you have been Searching for....
+         </div>
+         
+         <style>
+         .glowing-text {
+       position: relative;
+     }
+     
+     .glowing-text::before {
+       content: "";
+       position: absolute;
+       top: 0;
+       left: -100%;
+       width: 100%;
+       height: 100%;
+       background: linear-gradient(to right, transparent, #fd43439e, transparent);
+       animation: glowing 5s linear infinite;
+     }
+     
+     @keyframes glowing {
+       0% {
+         left: -100%;
+       }
+       100% {
+         left: 100%;
+       }
+     }
+
+    </style>
+    <br><br><br>
+
+      <style>
+         span {
+           color: rgb(255, 0, 0);
+         }
+       </style>
+       
+       <section class="vh-80 form-box">
+         <div class="container p-3 h-100" >
+           <div class="row d-flex justify-content-center align-items-center h-100">
+             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+               <div class="card shadow-2-strong" style="background-image: url('https://images.pexels.com/photos/2261166/pexels-photo-2261166.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') ; background-repeat: no-repeat;
+               background-size: cover; ">
+                 <div class="card-body p-5 text-center">
+       
+                   <h3 class="mb-5">Login</h3>
+       
+                   <form action="/signIn" method="post" onsubmit="return allChecking()">
+       
+                     <div class="form-outline mb-4">
+                       <!-- <label class="form-label" for="email">Email address</label> -->
+                       <input type="email" id="email" name="email" class="form-control form-control-lg"
+                         onchange="" placeholder="Enter your email" />
+                       <span id="Email"></span>
+                     </div>
+       
+       
+       
+                     <div class="form-outline mb-4">
+                       <!-- <label class="form-label" for="password">Password</label> -->
+                       <input type="password" id="password" class="form-control form-control-lg" name="password"
+                         onchange="" placeholder="enter your password" />
+                       <span id="Password"></span>
+                     </div>
+       
+                     <div class="d-flex justify-content-around align-items-center mb-4"></div>
+       
+       
+                     <button
+                       style="margin-bottom: 30px; width: 200px;background-color: rgb(0, 0, 0);border-radius: 20px ;padding:10px; "
+                       type="submit" class="btn text-white" value="Login" onclick="emailValidate(),passwordValidate()">
+                       Login
+                     </button>
+                     <hr>
+                     <a href="/forgotP">forgot password?</a>
+                     
+                     <div style="display: flex; justify-content: space-around;">
+                       <p class="mt-5"> New user<a href="/signUp" class="text-decoration-none text-primary"> Register
+                           here</a></p>
+                       <!-- <button class="btn btn-primary mt-5"><a href="../admin/login"
+                           class="text-decoration-none text-white">Admin Login</a></button> -->
+                     </div>
+                     <div class="">
+                       <% if(typeof message !=='undefined' ){ %>
+                         <span class="fs-4">
+                           <span style="color: red;">
+                             <%=message %>
+                           </span>
+                         </span>
+                         <% } %>
+                     </div>
+                   </form>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </section>
+       </form>
+       <script src="validation.js"></script>
+   </body>
+</html>
